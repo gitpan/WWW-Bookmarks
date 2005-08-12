@@ -1,0 +1,9 @@
+CHANGES
+MANIFEST
+Makefile.PL
+README
+lib/WWW/Bookmarks.pm
+t/00-load.t
+t/00-pod.t
+t/01-basic.t
+META.yml

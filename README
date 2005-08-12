@@ -1,0 +1,97 @@
+NAME
+    WWW::Bookmarks - An XMLRPC interface to any Bookmarks server
+
+SYNOPSIS
+      use WWW::Bookmarks;
+      my $bm = WWW::Bookmarks->new(
+        server => 'bookmarks.socklabs.com'
+      );
+
+      $bm->login('joe average', 'n0tgonnatell');
+  
+      my $urlid = $bm->addbookmark(
+        url => 'http://www.testurl.com',
+        tags => 'test,example,nothing special',
+        description => 'just a test url'
+      );
+      my $newtag = $bm->addtag( urlid => $urlid, name => 'tests and examples' );
+  
+      my $url = $bm->batchurl( 'http://www.testurl.com/' );
+  
+      $bm->deletebookmark( urlid => $urlid );
+
+DESCRIPTION
+    This module takes advantage of the extensive xmlrpc interface provided
+    by public Bookmarks servers and allows registered users to interact with
+    the site just as they would normally.
+
+    The Bookmarks XMLRPC API dicates that all user based functionality
+    requires an authkey provided by the server during the login call. In the
+    METHODS section each item will state if it requires an authkey.
+
+  NOTE
+    This is a beta version of the module with very few of the API functions
+    implimented. Please make note of this for future releases.
+
+METHODS
+    new This function instantiates a WWW::Bookmarks object. The arguments
+        that can be passed are limited to server.
+
+    login
+        This function initiates a user session by providing an authkey for a
+        username and password.
+
+    addbookmark
+        This function creates a new bookmark on the provided server. An
+        authkey is required.
+
+          Required Args:
+          url
+          tags, seperated by comma
+
+          Optional Args:
+          description
+          private
+          spam
+          adult
+
+    deletebookmark
+        This function deletes a given bookmark from the provided server. An
+        authkey is required.
+
+          Required Args:
+          urlid
+
+    addtag
+        This function adds a tag to a bookmark. An authkey is required.
+
+          Required Args:
+          urlid
+          name
+
+    deletetag
+        This function deletes a specific tag from a bookmark. An authkey is
+        required.
+
+          Required Args:
+          tagid
+
+    batchurl
+        This function allows users to do batch lookups of urls. By passing
+        along an array of urls it will return a hash of urls, having keys as
+        the place of the url in the passed array, with information on the
+        url. Currently the returned value only provides tags, but it could
+        provide entire url xml blocks in the near future.
+
+          Requires:
+          urls, as array. - ['http://www.google.com/', 'http://bookmarks.socklabs.com/tag/favorite', 'svn://bookmarks.socklabs.com/svn/www/trunk/Build.PL']
+
+AUTHOR
+        Nick Gerakines <nick@socklabs.com>
+
+COPYRIGHT
+        Copyright (C) 2005, Nick Gerakines
+
+        This module is free software; you can redistribute it or modify it
+        under the same terms as Perl itself.
+
